@@ -1,0 +1,165 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary: #600A5B; /* Official Deep Purple */
+    --secondary: #8A559D; /* Official Pink/Purple */
+    --white: #ffffff;
+    --light-bg: #fdf2f8;
+}
+
+body {
+    background-color: var(--white);
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background: var(--white);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.logo span {
+    color: var(--secondary);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links .btn-order {
+    background: var(--primary);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.nav-links .btn-order:hover {
+    background: var(--secondary);
+}
+
+/* Hero Section */
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(96, 10, 91, 0.8), rgba(138, 85, 157, 0.6)), url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.hero-btns button {
+    padding: 15px 30px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+.hero-btns button:first-child {
+    background: var(--secondary);
+    color: white;
+}
+
+.hero-btns button.secondary {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.hero-btns button:hover {
+    transform: translateY(-3px);
+}
+
+/* Cakes Section */
+.cakes {
+    padding: 5rem 10%;
+    text-align: center;
+    background: var(--light-bg);
+}
+
+.cakes h2 {
+    color: var(--primary);
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+}
+
+.cake-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.cake-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.cake-card:hover {
+    transform: scale(1.05);
+}
+
+.cake-img {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.cake-card button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

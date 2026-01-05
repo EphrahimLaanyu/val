@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentines Cake House | Digital Flagship</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <style>
+        /* -------------------------------------------------------------------------- */
+        /* VARIABLES & THEME - PINK DOMINANT                           */
+        /* -------------------------------------------------------------------------- */
+        :root {
+            /* New Pink Palette */
+            --color-bg: #FCEFF3; /* Soft Luxe Pink Background */
+            --color-accent: #D47A88; /* Deep Pink Accent */
+            
+            --color-text: #4A383B; /* Softer than black for text */
+            --color-white: #FFFFFF;
+            --color-black: #22191B; /* Deep charcoal */
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            
+            --spacing-container: 6vw;
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* RESET                                    */
+        /* -------------------------------------------------------------------------- */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            cursor: none; 
+            transition: background-color 2s ease;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        img { width: 100%; height: auto; display: block; }
+        ul { list-style: none; }
+
+        /* -------------------------------------------------------------------------- */
+        /* CUSTOM CURSOR (UPDATED FOR PINK)           */
+        /* -------------------------------------------------------------------------- */
+        .cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 12px; height: 12px;
+            background-color: var(--color-accent); /* Pink cursor */
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: normal;
+        }
+
+        .cursor.hovered {
+            width: 60px; height: 60px;
+            background-color: rgba(212, 122, 136, 0.2); /* Sheer pink */
+            border: 1px solid var(--color-accent);
+            mix-blend-mode: normal;
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* COMPONENTS & UTILITIES                     */
+        /* -------------------------------------------------------------------------- */
+        .container {
+            width: 100%;
+            padding: 0 var(--spacing-container);
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            margin-bottom: 2rem;
+            color: var(--color-black);
+            font-family: var(--font-serif);
+        }
+
+        /* Button Group Styling */
+        .cta-group {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        /* Pink Primary Button */
+        .btn-primary {
+            position: relative;
+            padding: 1.2rem 3rem;
+            background-color: var(--color-accent);
+            color: var(--color-white);
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            border: 1px solid var(--color-accent);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-white);
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+            mix-blend-mode: difference;
+        }
+
+        .btn-primary:hover::after { transform: translateX(0); }
+
+        .btn-secondary {
+            position: relative;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--color-black);
+            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-secondary:hover {
+            border-bottom: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding-right: 10px;
+        }
+
+        /* GRAIN REMOVED HERE */
+
+        /* -------------------------------------------------------------------------- */
+        /* HIGH-FASHION NAVIGATION                                                   */
+        /* -------------------------------------------------------------------------- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2.5rem var(--spacing-container);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+            /* Changed from difference to normal with color for cleaner pink look */
+            color: var(--color-black); 
+            pointer-events: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar > * { pointer-events: auto; }
+
+        .nav-logo {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 1.6rem;
+            letter-spacing: -0.03em;
+            position: relative;
+            z-index: 52;
+        }
+
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 3rem;
+        }
+
+        .nav-link {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .nav-link span {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-link::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            color: var(--color-accent); /* Pink hover */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-link:hover span { transform: translateY(-100%); }
+        .nav-link:hover::after { transform: translateY(-100%); }
+
+        .menu-toggle {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+            position: relative;
+            z-index: 52;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .menu-toggle::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background-color: currentColor;
+            display: block;
+            transition: width 0.3s ease;
+        }
+
+        .menu-toggle:hover::before { width: 50px; }
+
+        /* Mobile Menu - Pink themed */
+        .mobile-menu {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--color-bg); /* Pink BG */
+            z-index: 51;
+            transform: translateY(-100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: background-color 2s ease;
+        }
+
+        .mobile-link {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            color: var(--color-black);
+            margin: 1rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            font-style: italic;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .mobile-link:hover { color: var(--color-accent); }
+        
+        .mobile-close {
+            position: absolute;
+            top: 2.5rem;
+            right: var(--spacing-container);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--color-black);
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-center { display: none; }
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* HERO SECTION                               */
+        /* -------------------------------------------------------------------------- */
+        .hero-editorial {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            width: 100%;
+            height: 100%;
+            padding: 0 var(--spacing-container);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content-zone {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-right: 4rem;
+            position: relative;
+        }
+
+        .est-tag {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: color 2s ease;
+        }
+        .est-line { 
+            width: 40px; height: 1px; 
+            background-color: var(--color-accent);
+            transition: background-color 2s ease;
+        }
+
+        .hero-title-wrapper {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title-main {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 8vw, 7.5rem);
+            line-height: 0.85;
+            color: var(--color-black);
+            display: block;
+            margin-left: -0.05em;
+        }
+
+        .hero-title-sub {
+            font-family: var(--font-serif);
+            font-size: clamp(3.5rem, 8vw, 7.5rem);
+            line-height: 0.85;
+            color: var(--color-accent);
+            display: block;
+            font-style: italic;
+            margin-left: 2rem;
+            transition: color 2s ease;
+        }
+
+        .hero-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 480px;
+            color: var(--color-text);
+            margin-top: 1rem;
+            border-left: 1px solid var(--color-accent);
+            padding-left: 1.5rem;
+        }
+
+        .hero-visual-zone {
+            position: relative;
+            height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-img-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 200px 200px 0 0; 
+            /* Removed harsh black mask, using softer blend */
+            box-shadow: 0px -20px 50px rgba(212, 122, 136, 0.1);
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        .hero-slide img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transform: scale(1.2);
+        }
+        
+        .hero-slide.active { opacity: 1; }
+
+        .hero-badge {
+            position: absolute;
+            bottom: 10%;
+            left: -50px;
+            width: 140px;
+            height: 140px;
+            z-index: 10;
+        }
+
+        .badge-svg {
+            width: 100%; height: 100%;
+            animation: spin 20s linear infinite;
+            fill: var(--color-accent);
+        }
+        
+        .badge-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--color-accent);
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: var(--spacing-container);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            transform-origin: left;
+            transform: rotate(-90deg) translateX(100%);
+            z-index: 5;
+        }
+        .scroll-line { width: 40px; height: 1px; background-color: var(--color-accent); }
+
+        /* -------------------------------------------------------------------------- */
+        /* REDESIGNED ABOUT SECTION (No Image, Typography Focus)                      */
+        /* -------------------------------------------------------------------------- */
+        .about-editorial {
+            position: relative;
+            padding: 15rem 0;
+            overflow: hidden;
+            text-align: center;
+            /* A slightly deeper pink gradient for the about section */
+            background: linear-gradient(to bottom, var(--color-bg), #F5E1E6);
+        }
+
+        .editorial-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Replaced visual with pure typography focus */
+        .editorial-visual { display: none; }
+
+        .editorial-content {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .editorial-label {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 3rem;
+            display: block;
+        }
+
+        .editorial-quote {
+            font-family: var(--font-serif);
+            /* Massive, statement typography */
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            line-height: 0.9;
+            color: var(--color-black);
+            margin-bottom: 4rem;
+            margin-left: 0;
+            background: transparent;
+            padding: 0;
+        }
+
+        .editorial-quote span {
+            font-style: italic;
+            color: var(--color-accent);
+            font-weight: 400;
+        }
+
+        .editorial-narrative {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            max-width: 650px;
+            margin-bottom: 4rem;
+        }
+
+        .signature-block {
+            font-family: var(--font-serif);
+        }
+
+        .signature-name {
+            font-size: 2.5rem;
+            font-style: italic;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--color-black);
+        }
+
+        .signature-title {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-accent);
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* ATELIER CAKES SECTION (Pink Edition)                                       */
+        /* -------------------------------------------------------------------------- */
+        .cakes-atelier {
+            padding: 15rem 0 10rem 0;
+            /* Changed from stark white to soft pink */
+            background-color: #FFF0F5; 
+            border-top: 1px solid rgba(212, 122, 136, 0.2);
+        }
+
+        .atelier-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 8rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--color-accent);
+        }
+
+        .collection-year {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+        }
+
+        .atelier-title {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 6vw, 6rem);
+            color: var(--color-black);
+            line-height: 0.9;
+            text-align: right;
+        }
+
+        .atelier-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4vw;
+        }
+
+        .atelier-item {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .item-visual {
+            height: 70vh;
+            width: 100%;
+            background-color: #FBE7EB; /* Slightly darker pink placeholder */
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .item-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .atelier-item:hover .item-visual img {
+            transform: scale(1.05);
+        }
+
+        .item-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(212, 122, 136, 0.3); /* Pink Tint Overlay */
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-overlay span {
+            color: white;
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border: 1px solid white;
+            padding: 1rem 2rem;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+            background: var(--color-accent);
+            border: none;
+        }
+
+        .atelier-item:hover .item-overlay { opacity: 1; }
+        .atelier-item:hover .item-overlay span { transform: translateY(0); }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .item-category {
+            font-family: var(--font-sans);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+        }
+
+        .item-name {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--color-black);
+            font-weight: 400;
+        }
+
+        .item-price {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            color: var(--color-text);
+            margin-top: 0.5rem;
+        }
+
+        .shop-all-container {
+            margin-top: 8rem;
+            text-align: center;
+        }
+
+        .link-editorial {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 5px;
+            transition: opacity 0.3s, color 0.3s;
+            color: var(--color-black);
+        }
+        .link-editorial:hover { 
+            opacity: 1; 
+            color: var(--color-accent); 
+        }
+
+        footer { 
+            padding: 5rem 0; 
+            text-align: center; 
+            border-top: 1px solid var(--color-accent); 
+            background: var(--color-bg);
+            color: var(--color-black);
+        }
+
+        /* -------------------------------------------------------------------------- */
+        /* RESPONSIVE                                                                 */
+        /* -------------------------------------------------------------------------- */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; padding-top: 4rem; }
+            .hero-content-zone { padding-right: 0; order: 2; margin-top: -3rem; z-index: 5; }
+            .hero-visual-zone { height: 60vh; order: 1; margin-bottom: 2rem; }
+            .hero-img-container { border-radius: 0; }
+            .hero-badge { display: none; }
+            .hero-desc { border-left: none; padding-left: 0; margin-top: 2rem; }
+            .hero-title-sub { margin-left: 0; }
+            .cta-group { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+            .scroll-indicator { display: none; }
+            
+            /* About adjustments for mobile */
+            .editorial-quote { font-size: 3.5rem; }
+
+            .atelier-grid { grid-template-columns: 1fr; gap: 6rem; }
+            .item-visual { height: 60vh; }
+            .container { padding: 0 5vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+
+    <div class="preloader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--color-accent); z-index: 10000; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <h1 class="preloader-text" style="font-family: var(--font-serif); color: white; font-size: 3rem; overflow: hidden;">
+            <span style="display:inline-block">V</span><span style="display:inline-block">C</span><span style="display:inline-block">H</span>
+        </h1>
+    </div>
+
+    <header class="navbar">
+        <a href="#" class="nav-logo hover-trigger">VCH.</a>
+        
+        <nav class="nav-center">
+            <a href="#" class="nav-link hover-trigger" data-text="Home"><span>Home</span></a>
+            <a href="#collection" class="nav-link hover-trigger" data-text="Collection"><span>Collection</span></a>
+            <a href="#atelier" class="nav-link hover-trigger" data-text="Atelier"><span>Atelier</span></a>
+            <a href="#" class="nav-link hover-trigger" data-text="About"><span>About</span></a>
+            <a href="#" class="nav-link hover-trigger" data-text="Contact"><span>Contact</span></a>
+        </nav>
+
+        <div class="menu-toggle hover-trigger">Menu</div>
+    </header>
+
+    <div class="mobile-menu">
+        <div class="mobile-close hover-trigger">Close</div>
+        <a href="#" class="mobile-link hover-trigger">Home</a>
+        <a href="#collection" class="mobile-link hover-trigger">Collection</a>
+        <a href="#atelier" class="mobile-link hover-trigger">Atelier</a>
+        <a href="#" class="mobile-link hover-trigger">Journal</a>
+        <a href="#" class="mobile-link hover-trigger">Contact</a>
+    </div>
+
+    <main>
+        <section class="hero-editorial">
+            <div class="hero-grid">
+                <div class="hero-content-zone">
+                    <div class="est-tag reveal-hero">
+                        <span class="est-line"></span>
+                        <span>Est. MMXXIV</span>
+                    </div>
+
+                    <div class="hero-title-wrapper">
+                        <span class="hero-title-main reveal-hero-text">Valentines</span>
+                        <span class="hero-title-sub reveal-hero-text">Cake House</span>
+                    </div>
+
+                    <p class="hero-desc reveal-hero">
+                        The intersection of haute couture and confectionery. We craft edible sculptures for life's most defining moments, using rare single-origin chocolates and botanicals sourced from the valleys of France.
+                    </p>
+
+                    <div class="cta-group reveal-hero">
+                        <a href="#collection" class="btn-primary hover-trigger">View Collection</a>
+                        <a href="#atelier" class="btn-secondary hover-trigger">The Custom Atelier</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual-zone">
+                    <div class="hero-img-container reveal-hero-img">
+                        <div class="hero-slide active" data-accent="#D47A88" data-bg="#FCEFF3">
+                            <img src="https://images.unsplash.com/photo-1588195538326-c5f1f9fa478f?q=80&w=2574&auto=format&fit=crop" alt="Signature Pink">
+                        </div>
+                        <div class="hero-slide" data-accent="#C0A8B0" data-bg="#F4F0F2">
+                            <img src="https://images.unsplash.com/photo-1602351447937-745cb720612f?q=80&w=2569&auto=format&fit=crop" alt="Ethereal White">
+                        </div>
+                        <div class="hero-slide" data-accent="#B4B8AB" data-bg="#F2F5F0">
+                            <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80&w=2574&auto=format&fit=crop" alt="Organic Sage">
+                        </div>
+                    </div>
+
+                    <div class="hero-badge reveal-hero">
+                        <svg class="badge-svg" viewBox="0 0 100 100" width="100" height="100">
+                            <defs>
+                                <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+                            </defs>
+                            <text font-size="11" font-family="Montserrat" letter-spacing="2px" fill="currentColor">
+                                <textPath xlink:href="#circle">LUXURY CONFECTIONERY • </textPath>
+                            </text>
+                        </svg>
+                        <div class="badge-center">V</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to Explore</span>
+                <span class="scroll-line"></span>
+            </div>
+        </section>
+
+        <section class="about-editorial">
+            <div class="container">
+                <div class="editorial-layout">
+                    
+                    <div class="editorial-content">
+                        <span class="editorial-label reveal-about">The Visionary Statement</span>
+                        
+                        <h2 class="editorial-quote reveal-about">
+                            "We do not merely bake.<br>
+                            We sculpt <span style="font-style:italic; font-weight:400;">ephemeral art</span>."
+                        </h2>
+                        
+                        <p class="editorial-narrative reveal-about">
+                            Every creation at Valentines Cake House is an intimate dialogue between structure and flavor. I founded this atelier to challenge the mundane, believing that sugar is my medium and memory is my canvas. We design for the romantics, the dreamers, and those who understand that true luxury is tasted, not just seen.
+                        </p>
+
+                        <div class="signature-block reveal-about">
+                            <span class="signature-name">Valentine R.</span>
+                            <span class="signature-title">Founder & Creative Director</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cakes-atelier" id="collection">
+            <div class="container">
+                <div class="atelier-header reveal-text">
+                    <span class="collection-year">Collection 2025</span>
+                    <h2 class="atelier-title">The Patisserie Edit</h2>
+                </div>
+
+                <div class="atelier-grid">
+                    <div class="atelier-item reveal-card hover-trigger">
+                        <div class="item-visual">
+                            <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=2574&auto=format&fit=crop" alt="The Blush Peony">
+                            <div class="item-overlay"><span>Quick Look</span></div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-category">Signature Series / N° 01</span>
+                            <h3 class="item-name">The Blush Peony</h3>
+                            <span class="item-price">$120.00</span>
+                        </div>
+                    </div>
+
+                    <div class="atelier-item reveal-card hover-trigger" style="margin-top: 5rem;"> <div class="item-visual">
+                            <img src="https://images.unsplash.com/photo-1626803775151-61d756612fcd?q=80&w=2574&auto=format&fit=crop" alt="Midnight Velvet">
+                            <div class="item-overlay"><span>Quick Look</span></div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-category">Noir Edition / N° 05</span>
+                            <h3 class="item-name">Midnight Velvet</h3>
+                            <span class="item-price">$145.00</span>
+                        </div>
+                    </div>
+
+                    <div class="atelier-item reveal-card hover-trigger">
+                        <div class="item-visual">
+                            <img src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?q=80&w=2574&auto=format&fit=crop" alt="Citrus Cloud">
+                            <div class="item-overlay"><span>Quick Look</span></div>
+                        </div>
+                        <div class="item-details">
+                            <span class="item-category">Summer Solstice / N° 08</span>
+                            <h3 class="item-name">Citrus Cloud</h3>
+                            <span class="item-price">$95.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="shop-all-container">
+                    <a href="#" class="link-editorial hover-trigger">Discover Full Collection</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="section-title" style="font-size: 2rem;">VCH.</div>
+            <p style="font-size: 0.8rem; text-transform: uppercase;">&copy; 2024 Valentines Cake House</p>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Initialize Lenis Smooth Scroll
+            let lenis;
+            try {
+                lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    direction: 'vertical',
+                    smooth: true,
+                });
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            } catch (e) { console.warn("Lenis init failed", e); }
+
+            // 2. Custom Cursor
+            const cursor = document.querySelector('.cursor');
+            const hoverTriggers = document.querySelectorAll('.hover-trigger');
+            document.addEventListener('mousemove', (e) => {
+                gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
+            });
+            const updateHoverTriggers = () => {
+                const triggers = document.querySelectorAll('.hover-trigger');
+                triggers.forEach(link => {
+                    link.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                    link.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+                });
+            };
+            updateHoverTriggers();
+
+            // 3. Preloader & Intro & Nav Entrance
+            const tl = gsap.timeline();
+            
+            // Set nav initial state
+            gsap.set('.navbar', { y: -100, opacity: 0 });
+
+            tl.to('.preloader-text span', { y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" })
+              .to('.preloader', { height: 0, duration: 1, ease: "power4.inOut", delay: 0.5 });
+
+            tl.from('.hero-img-container', { y: 100, opacity: 0, duration: 1.5, scale: 0.9, ease: "power3.out" }, "-=0.5")
+              .from('.reveal-hero-text', { y: 100, opacity: 0, rotate: 2, duration: 1.2, stagger: 0.1, ease: "power3.out" }, "-=1.2")
+              .from('.reveal-hero', { y: 20, opacity: 0, duration: 1, stagger: 0.1, ease: "power2.out" }, "-=0.8")
+              .to('.navbar', { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=1"); 
+
+            // 4. Parallax Image (Hero)
+            gsap.to(".hero-slide img", {
+                yPercent: 15,
+                ease: "none",
+                scrollTrigger: { trigger: ".hero-editorial", start: "top top", end: "bottom top", scrub: true }
+            });
+
+            // 5. CAROUSEL LOGIC
+            const slides = document.querySelectorAll('.hero-slide');
+            const slideInterval = 6000; 
+            let currentSlideIndex = 0;
+
+            function nextSlide() {
+                const currentSlide = slides[currentSlideIndex];
+                currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+                const nextSlide = slides[currentSlideIndex];
+
+                const newAccent = nextSlide.getAttribute('data-accent');
+                const newBg = nextSlide.getAttribute('data-bg');
+
+                gsap.to(':root', { 
+                    '--color-accent': newAccent, 
+                    '--color-bg': newBg, 
+                    duration: 2, 
+                    ease: "power2.inOut" 
+                });
+
+                gsap.to(currentSlide, { opacity: 0, zIndex: 1, duration: 1.5, ease: "power2.inOut" });
+                gsap.set(nextSlide, { opacity: 0, zIndex: 2, scale: 1.4 }); 
+                gsap.to(nextSlide, { opacity: 1, scale: 1.2, duration: 2, ease: "power2.inOut" });
+            }
+
+            setTimeout(() => { setInterval(nextSlide, slideInterval); }, 3000);
+
+            // 6. Mobile Menu Logic
+            const menuToggle = document.querySelector('.menu-toggle');
+            const closeToggle = document.querySelector('.mobile-close');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            const mobileTl = gsap.timeline({ paused: true });
+
+            mobileTl.to(mobileMenu, { y: 0, duration: 0.8, ease: "power4.inOut" })
+                    .to(closeToggle, { opacity: 1, duration: 0.4 }, "-=0.4")
+                    .to(mobileLinks, { y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" }, "-=0.6");
+
+            menuToggle.addEventListener('click', () => mobileTl.play());
+            closeToggle.addEventListener('click', () => mobileTl.reverse());
+            mobileLinks.forEach(l => l.addEventListener('click', () => mobileTl.reverse()));
+
+            // 7. Reveal Animations
+            
+            // New About Section Reveals
+            // Removed visual reveal since visual is gone
+            /* gsap.from('.editorial-visual', {
+                y: 50, opacity: 0, duration: 1.5, ease: "power3.out",
+                scrollTrigger: { trigger: '.about-editorial', start: "top 70%" }
+            }); */
+            
+            gsap.utils.toArray('.reveal-about').forEach(el => {
+                gsap.from(el, {
+                    y: 30, opacity: 0, duration: 1, ease: "power3.out",
+                    scrollTrigger: { trigger: el, start: "top 85%" }
+                });
+            });
+
+            // Standard Reveals
+            gsap.utils.toArray('.reveal-text').forEach(text => {
+                gsap.from(text, {
+                    y: 50, opacity: 0, duration: 1, ease: "power3.out",
+                    scrollTrigger: { trigger: text, start: "top 85%" }
+                });
+            });
+            
+            // Cake Cards Stagger (Updated Selector)
+            gsap.from('.reveal-card', {
+                y: 100, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out",
+                scrollTrigger: { trigger: '.atelier-grid', start: "top 75%" }
+            });
+        });
+    </script>
+</body>
+</html>
